@@ -138,7 +138,7 @@ export default function HardEncryptionQuestion({
           <div className="text-sm">
             <p className="font-bold mb-2">Binary to ASCII:</p>
             <p>Each 8 bits (1 byte) represents one character</p>
-            <p>Example: 01001000 01101001 = "Hi"</p>
+            <p>Example: 01001000 01101001 = &quot;Hi&quot;</p>
           </div>
         );
       case 'hex':
@@ -146,7 +146,7 @@ export default function HardEncryptionQuestion({
           <div className="text-sm">
             <p className="font-bold mb-2">Hexadecimal to ASCII:</p>
             <p>Each pair of hex digits represents one character</p>
-            <p>Example: 48 69 = "Hi"</p>
+            <p>Example: 48 69 = &quot;Hi&quot;</p>
           </div>
         );
       case 'base64':
@@ -154,7 +154,7 @@ export default function HardEncryptionQuestion({
           <div className="text-sm">
             <p className="font-bold mb-2">Base64:</p>
             <p>Uses A-Z, a-z, 0-9, +, and /</p>
-            <p>Example: SGVsbG8 = "Hello"</p>
+            <p>Example: SGVsbG8 = &quot;Hello&quot;</p>
           </div>
         );
       default:

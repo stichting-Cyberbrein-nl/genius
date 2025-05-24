@@ -133,8 +133,6 @@ export default function Quiz() {
             ? `${t('quizComplete')} ${t('yourScore')}: ${score} ${t('outOf')} ${questions.length} ${t('questions')}!`
             : t('quizTitle')
           }
-          isThinking={!quizComplete}
-          mood={quizComplete ? (score > questions.length / 2 ? 'happy' : 'neutral') : 'thinking'}
         />
 
         {!quizComplete ? (

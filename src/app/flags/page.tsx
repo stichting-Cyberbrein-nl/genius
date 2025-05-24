@@ -7,7 +7,6 @@ import Einstein from '@/components/Einstein';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
-import einsteinImg from '@/public/einstein.png';
 
 export default function Flags() {
   const { t } = useLanguage();

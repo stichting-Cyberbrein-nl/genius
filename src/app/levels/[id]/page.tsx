@@ -72,8 +72,6 @@ export default function Level() {
               ? `${t('decodeMessage')} "uryyb_jbeyq"`
               : `${t('levelWelcome')} ${id}`
           }
-          isThinking={!isCorrect}
-          // mood={isCorrect ? 'excited' : 'thinking'}
         />
 
         <motion.div

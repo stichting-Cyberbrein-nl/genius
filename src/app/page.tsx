@@ -22,7 +22,6 @@ export default function Home() {
 
         <Einstein
           message={t('welcome')}
-          isThinking={true}
         />
 
         <motion.div

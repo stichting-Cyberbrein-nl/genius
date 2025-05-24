@@ -17,24 +17,19 @@ export default function EncryptionQuestion({
   onCorrect
 }: EncryptionQuestionProps) {
   const { t } = useLanguage();
-  const [answer, setAnswer] = useState('');
-  const [message, setMessage] = useState('');
   const [showCheatSheet, setShowCheatSheet] = useState(false);
   const [input, setInput] = useState('');
   const [feedback, setFeedback] = useState('');
-  const [isCorrect, setIsCorrect] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const decrypted = decryptText(encryptedText, type, shift);
     
     if (input.trim().toUpperCase() === decrypted.toUpperCase()) {
-      setIsCorrect(true);
       setFeedback(t('einsteinCorrect'));
       setInput('');
       onCorrect();
     } else {
-      setIsCorrect(false);
       setFeedback(t('einsteinIncorrect'));
     }
   };

@@ -86,7 +86,7 @@ export default function HintsPage() {
         </div>
         <Einstein message={t('encryptionHints')} />
         <div className="space-y-4">
-          {Object.entries(hintSections).map(([key, section], idx) => (
+          {Object.entries(hintSections).map(([, section], idx) => (
             <div key={idx} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
               <button
                 className="w-full text-left font-bold text-lg text-gray-900 dark:text-white focus:outline-none"

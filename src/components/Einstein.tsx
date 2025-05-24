@@ -8,11 +8,9 @@ import Image from 'next/image';
 
 interface EinsteinProps {
   message?: string;
-  isThinking?: boolean;
-  mood?: 'happy' | 'neutral' | 'thinking';
 }
 
-export default function Einstein({ message, isThinking = false, mood = 'neutral' }: EinsteinProps) {
+export default function Einstein({ message }: EinsteinProps) {
   const { t } = useLanguage();
   const { findFlag, getFlagByType } = useFlags();
   const [showFlagMessage, setShowFlagMessage] = useState(false);
@@ -25,18 +23,6 @@ export default function Einstein({ message, isThinking = false, mood = 'neutral'
       setFlagMessage(t('einsteinFlagFound'));
       setShowFlagMessage(true);
       setTimeout(() => setShowFlagMessage(false), 3000);
-    }
-  };
-
-  const getMoodEmoji = () => {
-    if (isThinking) return '🤔';
-    switch (mood) {
-      case 'happy':
-        return '😊';
-      case 'thinking':
-        return '🤔';
-      default:
-        return '😐';
     }
   };
 

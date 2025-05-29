@@ -28,10 +28,11 @@ export default function HardEncryptionQuestion({
     const decrypted = decryptText(encryptedText, type, shift);
     
     if (answer.toLowerCase() === decrypted.toLowerCase()) {
-      setMessage(t('einsteinCorrect'));
+      setMessage(String(t('einsteinCorrect')));
+      setAnswer('');
       onCorrect();
     } else {
-      setMessage(t('einsteinIncorrect'));
+      setMessage(String(t('einsteinIncorrect')));
     }
   };
 
@@ -166,10 +167,10 @@ export default function HardEncryptionQuestion({
     <div className="space-y-6">
       <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
         <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-          {t(`einstein${type.charAt(0).toUpperCase() + type.slice(1)}Title`)}
+          {String(t(`einstein${type.charAt(0).toUpperCase() + type.slice(1)}Title`))}
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-          {t(`einstein${type.charAt(0).toUpperCase() + type.slice(1)}Desc`, { shift: shift || 0 })}
+          {String(t(`einstein${type.charAt(0).toUpperCase() + type.slice(1)}Desc`, { shift: shift || 0 }))}
         </p>
         <div className="font-mono text-lg text-gray-900 dark:text-white">
           {encryptedText}
@@ -180,7 +181,7 @@ export default function HardEncryptionQuestion({
         onClick={() => setShowCheatSheet(!showCheatSheet)}
         className="text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
       >
-        {showCheatSheet ? t('hideCheatSheet') : t('showCheatSheet')}
+        {showCheatSheet ? String(t('hideCheatSheet')) : String(t('showCheatSheet'))}
       </button>
 
       {showCheatSheet && (
@@ -192,14 +193,14 @@ export default function HardEncryptionQuestion({
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="answer" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t('einsteinQuestion')}
+            {String(t('einsteinQuestion'))}
           </label>
           <input
             type="text"
             id="answer"
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
-            placeholder={t('einsteinPlaceholder')}
+            placeholder={String(t('einsteinPlaceholder'))}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
           />
         </div>
@@ -207,13 +208,13 @@ export default function HardEncryptionQuestion({
           type="submit"
           className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
         >
-          {t('einsteinSubmit')}
+          {String(t('einsteinSubmit'))}
         </button>
       </form>
 
       {message && (
         <div className={`p-4 rounded-lg ${
-          message === t('einsteinCorrect') 
+          message === String(t('einsteinCorrect')) 
             ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200'
             : 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200'
         }`}>

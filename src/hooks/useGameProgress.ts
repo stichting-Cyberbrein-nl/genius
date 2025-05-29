@@ -25,19 +25,27 @@ const initialProgress: GameProgress = {
 };
 
 export function useGameProgress() {
-  const [progress, setProgress] = useState<GameProgress>(initialProgress);
-
-  // Load progress from localStorage on mount
-  useEffect(() => {
-    const savedProgress = localStorage.getItem('gameProgress');
-    if (savedProgress) {
-      setProgress(JSON.parse(savedProgress));
+  // Initialize state with a function to ensure it only runs once
+  const [progress, setProgress] = useState<GameProgress>(() => {
+    if (typeof window !== 'undefined') {
+      const savedProgress = localStorage.getItem('gameProgress');
+      if (savedProgress) {
+        try {
+          return JSON.parse(savedProgress);
+        } catch (error) {
+          console.error('Error parsing saved progress:', error);
+          return initialProgress;
+        }
+      }
     }
-  }, []);
+    return initialProgress;
+  });
 
   // Save progress to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('gameProgress', JSON.stringify(progress));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('gameProgress', JSON.stringify(progress));
+    }
   }, [progress]);
 
   const updateProgress = (difficulty: 'easy' | 'hard', level: number, points: number) => {

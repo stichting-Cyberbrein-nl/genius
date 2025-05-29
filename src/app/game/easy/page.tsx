@@ -1,26 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GameLayout from '@/components/GameLayout';
 import { useGameProgress } from '@/hooks/useGameProgress';
 import EncryptionQuestion from '@/components/EncryptionQuestion';
 import { useLanguage } from '@/lib/i18n';
+import { useFlags } from '@/hooks/useFlags';
+import { motion } from 'framer-motion';
 
 // Vooraf gedefinieerde vragen
 const questions = [
   // Caesar cipher vragen
-  { type: 'caesar' as const, shift: 3, encryptedText: 'KHOOR' }, // HELLO
-  { type: 'caesar' as const, shift: 5, encryptedText: 'MJQQT' }, // HELLO
-  { type: 'caesar' as const, shift: 7, encryptedText: 'OLSSV' }, // HELLO
-  { type: 'caesar' as const, shift: 13, encryptedText: 'URYYB' }, // HELLO
-  { type: 'caesar' as const, shift: 1, encryptedText: 'IFMMP' }, // HELLO
+  { type: 'caesar' as const, shift: 3, encryptedText: 'fbehueuhlq' }, // CYBERBREIN
+  { type: 'caesar' as const, shift: 5, encryptedText: 'mfhpxmnjqi' }, // HACKSHIELD
+  { type: 'caesar' as const, shift: 7, encryptedText: 'cpybz' },     // VIRUS
+  { type: 'caesar' as const, shift: 13, encryptedText: 'unpxre' },     // HACKER
+  { type: 'caesar' as const, shift: 1, encryptedText: 'xbdiuxppse' },   // WACHTWOORD
   
   // ROT13 vragen
-  { type: 'rot13' as const, encryptedText: 'EBG13' }, // ROT13
-  { type: 'rot13' as const, encryptedText: 'PNGURF' }, // CHATRE
-  { type: 'rot13' as const, encryptedText: 'EBG13_VF_FUN' }, // ROT13_IS_SHA
-  { type: 'rot13' as const, encryptedText: 'PNGURF_EBG13' }, // CHATRE_ROT13
-  { type: 'rot13' as const, encryptedText: 'EBG13_EBG13_EBG13' } // ROT13_ROT13_ROT13
+  { type: 'rot13' as const, encryptedText: 'ploreoerva' }, // CYBERBREIN
+  { type: 'rot13' as const, encryptedText: 'unpxfuvryq' }, // HACKSHIELD
+  { type: 'rot13' as const, encryptedText: 'cnffjbeq' },   // PASSWORD
+  { type: 'rot13' as const, encryptedText: 'rapelcgvba' }, // encryption
+  { type: 'rot13' as const, encryptedText: 'unpx_gur_unpxre' } // HACK_DE_HACKER
 ];
 
 export default function EasyGame() {
@@ -28,6 +30,18 @@ export default function EasyGame() {
   const { currentLevel, points } = getProgress('easy');
   const [currentQuestion, setCurrentQuestion] = useState(currentLevel - 1);
   const { t } = useLanguage();
+  const { findFlag } = useFlags();
+  const [showFlagMessage, setShowFlagMessage] = useState(false);
+  const [flagAwarded, setFlagAwarded] = useState(false);
+
+  useEffect(() => {
+    if (currentQuestion >= questions.length && !flagAwarded) {
+      findFlag('easy_game_flag');
+      setFlagAwarded(true);
+      setShowFlagMessage(true);
+      setTimeout(() => setShowFlagMessage(false), 3000);
+    }
+  }, [currentQuestion, findFlag, flagAwarded]);
 
   const handleCorrect = () => {
     const newPoints = points + 10; // 10 punten per correct antwoord
@@ -56,14 +70,16 @@ export default function EasyGame() {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             {t('einsteinQuote')}
           </p>
-          <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg inline-block">
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-              {t('einsteinReward')}
-            </p>
-            <div className="font-mono text-lg text-gray-900 dark:text-white">
-              {"FLAG{EINSTEIN_WAS_A_GENIUS}"}
-            </div>
-          </div>
+          {showFlagMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="mb-6 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg"
+            >
+              {t('easyGameFlagFound')}
+            </motion.div>
+          )}
         </div>
       )}
     </GameLayout>

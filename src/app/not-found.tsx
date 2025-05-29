@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLanguage } from '@/lib/i18n';
 import { useFlags } from '@/hooks/useFlags';
 import Link from 'next/link';
@@ -8,14 +8,15 @@ import Einstein from '@/components/Einstein';
 
 export default function NotFound() {
   const { t } = useLanguage();
-  const { findFlag, getFlagByType } = useFlags();
+  const { findFlag } = useFlags();
+  const flagGivenRef = useRef(false);
 
   useEffect(() => {
-    const flag = getFlagByType('404');
-    if (flag && !flag.found) {
-      findFlag('404');
+    if (!flagGivenRef.current) {
+      findFlag('404_flag');
+      flagGivenRef.current = true;
     }
-  }, [findFlag, getFlagByType]);
+  }, [findFlag]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -36,7 +37,7 @@ export default function NotFound() {
           </Link>
         </div>
         <div className="mt-8">
-          <Einstein message={t('404Message')} />
+          <Einstein message={t('404Message') as string} />
         </div>
       </div>
     </div>

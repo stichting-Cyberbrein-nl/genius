@@ -21,7 +21,7 @@ export default function Home() {
         </div>
 
         <Einstein
-          message={t('welcome')}
+          message={String(t('welcome'))}
         />
 
         <motion.div

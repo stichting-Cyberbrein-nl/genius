@@ -1,17 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GameLayout from '@/components/GameLayout';
 import { useGameProgress } from '@/hooks/useGameProgress';
 import HardEncryptionQuestion from '@/components/HardEncryptionQuestion';
 import { useLanguage } from '@/lib/i18n';
+import { useFlags } from '@/hooks/useFlags';
+import { motion } from 'framer-motion';
 
 // Vooraf gedefinieerde vragen
 const questions = [
   // Morse code - Basis woorden
   { type: 'morse' as const, encryptedText: '.... . .-.. .-.. --- / .-- --- .-. .-.. -..' }, // HELLO WORLD
-  { type: 'morse' as const, encryptedText: '.--. .-. --- --. .-. .- -- -- .. -. --.' }, // PROGRAMMING
-  { type: 'morse' as const, encryptedText: '-.-. --- -- .--. ..- - . .-. / ... -.-. .. . -. -.-. .' }, // COMPUTER SCIENCE
+  { type: 'morse' as const, encryptedText: '... -. .- -.- . -... --- -.--' }, // snakeboy
+  { type: 'morse' as const, encryptedText: '-.-. --- -.. . -.- .-. .- -.- . .-.' }, // codekraker 
   
   // Binary - Basis woorden
   { type: 'binary' as const, encryptedText: '01001000 01100101 01101100 01101100 01101111' }, // HELLO
@@ -31,19 +33,31 @@ const questions = [
   // Caesar cipher - Moeilijkere shifts
   { type: 'caesar' as const, shift: 7, encryptedText: 'OLSSV' }, // HELLO
   { type: 'caesar' as const, shift: 13, encryptedText: 'EBG13' }, // ROT13
-  { type: 'caesar' as const, shift: 5, encryptedText: 'HTRUJYJSHJ' }, // COMPUTER
+  { type: 'caesar' as const, shift: 5, encryptedText: 'HTRUZYJW' }, // COMPUTER
   
   // ROT13 - Moeilijkere combinaties
-  { type: 'rot13' as const, encryptedText: 'EBG13_VF_FUN' }, // ROT13_IS_SHA
-  { type: 'rot13' as const, encryptedText: 'PNGURF_EBG13' }, // CHATRE_ROT13
-  { type: 'rot13' as const, encryptedText: 'EBG13_EBG13_EBG13' } // ROT13_ROT13
+  { type: 'rot13' as const, encryptedText: 'syvccremreb' }, // flipperzero
+  { type: 'rot13' as const, encryptedText: 'qnexjro' }, // darkweb
+  { type: 'rot13' as const, encryptedText: 'oehgr-sbepr' } // bruteforce
 ];
 
 export default function HardGame() {
   const { getProgress, updateProgress } = useGameProgress();
   const { currentLevel, points } = getProgress('hard');
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(currentLevel - 1);
   const { t } = useLanguage();
+  const { findFlag } = useFlags();
+  const [showFlagMessage, setShowFlagMessage] = useState(false);
+  const [flagAwarded, setFlagAwarded] = useState(false);
+
+  useEffect(() => {
+    if (currentQuestion >= questions.length && !flagAwarded) {
+      findFlag('hard_game_flag');
+      setFlagAwarded(true);
+      setShowFlagMessage(true);
+      setTimeout(() => setShowFlagMessage(false), 3000);
+    }
+  }, [currentQuestion, findFlag, flagAwarded]);
 
   const handleCorrect = () => {
     const newPoints = points + 20; // Meer punten voor moeilijke vragen
@@ -72,14 +86,16 @@ export default function HardGame() {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             {t('einsteinQuote')}
           </p>
-          <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg inline-block">
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-              {t('einsteinReward')}
-            </p>
-            <div className="font-mono text-lg text-gray-900 dark:text-white">
-              {"FLAG{EINSTEIN_WAS_A_GENIUS}"}
-            </div>
-          </div>
+          {showFlagMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="mb-6 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg"
+            >
+              {t('hardGameFlagFound')}
+            </motion.div>
+          )}
         </div>
       )}
     </GameLayout>

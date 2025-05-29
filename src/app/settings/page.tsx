@@ -13,7 +13,7 @@ export default function Settings() {
   const [fontSize, setFontSize] = useState('medium');
   const [sound, setSound] = useState(true);
   const [animations, setAnimations] = useState(true);
-  const { findFlag, getFlagByType } = useFlags();
+  const { findFlag } = useFlags();
 
   // Load settings from localStorage on mount
   useEffect(() => {
@@ -51,41 +51,29 @@ export default function Settings() {
 
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
-    const themeFlag = getFlagByType('theme');
-    if (themeFlag && !themeFlag.found) {
-      findFlag('theme');
-    }
+    findFlag('theme_flag');
   };
 
   const handleFontSizeChange = (newSize: string) => {
     setFontSize(newSize);
-    const textFlag = getFlagByType('text');
-    if (textFlag && !textFlag.found) {
-      findFlag('text');
-    }
+    findFlag('text_flag');
   };
 
   const handleSoundToggle = () => {
     setSound(!sound);
-    const soundFlag = getFlagByType('sound');
-    if (soundFlag && !soundFlag.found) {
-      findFlag('sound');
-    }
+    findFlag('sound_flag');
   };
 
   const handleAnimationsToggle = () => {
     setAnimations(!animations);
-    const animationFlag = getFlagByType('animation');
-    if (animationFlag && !animationFlag.found) {
-      findFlag('animation');
-    }
+    findFlag('animation_flag');
   };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <Einstein message={t('settingsMessage')} />
+          <Einstein message={String(t('settingsMessage'))} />
         </div>
 
         <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">

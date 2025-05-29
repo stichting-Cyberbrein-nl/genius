@@ -16,49 +16,114 @@ export default function Flags() {
   const [downloading, setDownloading] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => { setIsClient(true); }, []);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      const savedFlags = localStorage.getItem('flags');
+      if (savedFlags) {
+        const parsedFlags = JSON.parse(savedFlags);
+        const foundFlags = parsedFlags.filter((f: { found: boolean; name: string; description: string; points: number; foundAt?: string; id: string }) => f.found);
+        if (foundFlags.length !== foundFlags.length) {
+          setIsClient(false);
+          setTimeout(() => setIsClient(true), 0);
+        }
+      }
+    }
+  }, [foundFlags]);
 
   const handleDownload = async () => {
     setDownloading(true);
     const doc = new jsPDF();
-    // Einstein afbeelding toevoegen
+    
+    // Add Einstein image
     try {
       const img = new Image();
       img.src = '/einstein.png';
       await new Promise((resolve) => { img.onload = resolve; });
       doc.addImage(img, 'PNG', 80, 10, 50, 50);
     } catch {}
-    let y = 70;
-    doc.setFontSize(20);
-    doc.text(t('certificateTitle'), 105, y, { align: 'center' });
-    y += 15;
+
+    // Set colors
+    const primaryColor = '#4F46E5'; // Indigo
+    const secondaryColor = '#10B981'; // Emerald
+    const textColor = '#1F2937'; // Dark gray
+
+    // Title
+    doc.setFontSize(24);
+    doc.setTextColor(primaryColor);
+    doc.text(t('certificateTitle'), 105, 70, { align: 'center' });
+
+    // Congratulations message
+    doc.setFontSize(16);
+    doc.setTextColor(textColor);
+    const name = userName || (t('certificateNameLabel') as string);
+    doc.text(t('certificateCongrats', { name }), 105, 85, { align: 'center' });
+
+    // Achievement section
     doc.setFontSize(14);
-    doc.text(t('certificateCongrats', { name: userName || t('certificateNameLabel') }), 105, y, { align: 'center' });
-    y += 10;
-    doc.setFontSize(12);
-    doc.text(`${t('certificateFoundFlags')}: ${foundFlags.length}`, 105, y, { align: 'center' });
-    y += 8;
-    doc.text(`${t('certificateDate')}: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 105, y, { align: 'center' });
-    y += 12;
-    // Vlaggenlijst
+    doc.setTextColor(secondaryColor);
+    doc.text(t('certificateFoundFlags') + ': ' + foundFlags.length, 105, 95, { align: 'center' });
+    doc.text(t('certificateDate') + ': ' + new Date().toLocaleDateString(), 105, 102, { align: 'center' });
+
+    // Flag list
     if (foundFlags.length > 0) {
       doc.setFontSize(13);
-      doc.text(t('certificateFlagList'), 20, y);
-      y += 7;
+      doc.setTextColor(primaryColor);
+      doc.text(t('certificateFlagList'), 20, 115);
+      
       doc.setFontSize(11);
+      doc.setTextColor(textColor);
+      let y = 125;
       foundFlags.forEach((flag) => {
         if (y > 270) { doc.addPage(); y = 20; }
-        doc.text(`${t('certificateFlag')}: ${flag.name}`, 25, y);
+        doc.text(t('certificateFlag') + ': ' + flag.name, 25, y);
         y += 6;
-        doc.text(`${flag.description}`, 30, y);
+        doc.text(flag.description, 30, y);
         y += 6;
-        doc.text(`${t('certificatePoints')}: ${flag.points} | ${t('certificateDate')}: ${flag.foundAt ? new Date(flag.foundAt).toLocaleString() : ''}`, 30, y);
+        doc.text(t('certificatePoints') + ': ' + flag.points + ' | ' + t('certificateDate') + ': ' + (flag.foundAt ? new Date(flag.foundAt).toLocaleString() : ''), 30, y);
         y += 10;
       });
     }
-    y += 5;
+
+    // Cyberbrein information
+    doc.addPage();
+    doc.setFontSize(16);
+    doc.setTextColor(primaryColor);
+    doc.text('Over Stichting Cyberbrein', 105, 20, { align: 'center' });
+    
     doc.setFontSize(12);
-    doc.text(t('certificateFooter'), 105, y, { align: 'center' });
+    doc.setTextColor(textColor);
+    const cyberbreinText = [
+      'Stichting Cyberbrein is dé plek om meer te leren over cybersecurity!',
+      '',
+      'Leer spelenderwijs over cybersecurity',
+      'Ontmoet andere jonge hackers',
+      'Doe mee aan spannende challenges',
+      'Leer van ervaren cybersecurity experts',
+      '',
+      'Wil je meer leren?',
+      '• Bezoek cyberbrein.nl',
+      '• Word lid van onze Discord community',
+      '• Doe mee aan onze workshops en events',
+      '',
+      'Samen maken we het internet veiliger!'
+    ];
+
+    let y = 35;
+    cyberbreinText.forEach(line => {
+      if (y > 270) { doc.addPage(); y = 20; }
+      doc.text(line, 20, y);
+      y += 8;
+    });
+
+    // Footer
+    doc.setFontSize(10);
+    doc.setTextColor(secondaryColor);
+    doc.text(t('certificateFooter'), 105, 280, { align: 'center' });
+    
     doc.save(`genius-certificate-${userName || 'participant'}.pdf`);
     setDownloading(false);
     setShowModal(false);
@@ -78,7 +143,7 @@ export default function Flags() {
 
         <div className="mb-8">
           {isClient && (
-            <Einstein message={foundFlags.length === 0 ? t('noFlags') : `${t('flagsMessage')} ${t('totalPoints')}: ${totalPoints}`} />
+            <Einstein message={foundFlags.length === 0 ? t('noFlags') as string : `${t('flagsMessage') as string} ${t('totalPoints') as string}: ${totalPoints}`} />
           )}
         </div>
 

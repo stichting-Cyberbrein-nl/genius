@@ -1,72 +1,85 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/i18n';
 import Einstein from '@/components/Einstein';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-
-const questions = [
-  {
-    question: 'Wat is een wachtwoord?',
-    options: [
-      'Een geheim woord of zin om toegang te krijgen',
-      'Een computerprogramma',
-      'Een soort virus',
-      'Een website'
-    ],
-    correctAnswer: 0
-  },
-  {
-    question: 'Wat is phishing?',
-    options: [
-      'Een soort vis',
-      'Een manier om mensen te misleiden via e-mail of websites',
-      'Een computerprogramma',
-      'Een soort virus'
-    ],
-    correctAnswer: 1
-  },
-  {
-    question: 'Wat is een firewall?',
-    options: [
-      'Een muur van vuur',
-      'Een beveiligingssysteem dat je computer beschermt',
-      'Een soort virus',
-      'Een website'
-    ],
-    correctAnswer: 1
-  },
-  {
-    question: 'Wat is encryptie?',
-    options: [
-      'Een soort virus',
-      'Een website',
-      'Het versleutelen van informatie zodat alleen de juiste mensen het kunnen lezen',
-      'Een computerprogramma'
-    ],
-    correctAnswer: 2
-  },
-  {
-    question: 'Wat is een virus?',
-    options: [
-      'Een ziekte',
-      'Een website',
-      'Een computerprogramma',
-      'Een schadelijk programma dat je computer kan beschadigen'
-    ],
-    correctAnswer: 3
-  }
-];
+import { useFlags } from '@/hooks/useFlags';
 
 export default function Quiz() {
   const { t } = useLanguage();
+  const { findFlag } = useFlags();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
+  const [showFlagMessage, setShowFlagMessage] = useState(false);
+  const [flagFound, setFlagFound] = useState(false);
+
+  const questions = [
+    {
+      question: t('quizQuestion1'),
+      options: [
+        t('quizAnswer1_1'),
+        t('quizAnswer1_2'),
+        t('quizAnswer1_3'),
+        t('quizAnswer1_4')
+      ],
+      correctAnswer: 0
+    },
+    {
+      question: t('quizQuestion2'),
+      options: [
+        t('quizAnswer2_1'),
+        t('quizAnswer2_2'),
+        t('quizAnswer2_3'),
+        t('quizAnswer2_4')
+      ],
+      correctAnswer: 1
+    },
+    {
+      question: t('quizQuestion3'),
+      options: [
+        t('quizAnswer3_1'),
+        t('quizAnswer3_2'),
+        t('quizAnswer3_3'),
+        t('quizAnswer3_4')
+      ],
+      correctAnswer: 1
+    },
+    {
+      question: t('quizQuestion4'),
+      options: [
+        t('quizAnswer4_1'),
+        t('quizAnswer4_2'),
+        t('quizAnswer4_3'),
+        t('quizAnswer4_4')
+      ],
+      correctAnswer: 2
+    },
+    {
+      question: t('quizQuestion5'),
+      options: [
+        t('quizAnswer5_1'),
+        t('quizAnswer5_2'),
+        t('quizAnswer5_3'),
+        t('quizAnswer5_4')
+      ],
+      correctAnswer: 3
+    }
+  ];
+
+  useEffect(() => {
+    if (quizComplete && !flagFound) {
+      findFlag('quiz_flag');
+      setFlagFound(true);
+      setShowFlagMessage(true);
+      setTimeout(() => setShowFlagMessage(false), 3000);
+    }
+  }, [quizComplete, findFlag, flagFound]);
 
   const handleAnswer = (answerIndex: number) => {
     setSelectedAnswer(answerIndex);
@@ -129,10 +142,10 @@ export default function Quiz() {
         </div>
 
         <Einstein
-          message={quizComplete 
+          message={String(quizComplete 
             ? `${t('quizComplete')} ${t('yourScore')}: ${score} ${t('outOf')} ${questions.length} ${t('questions')}!`
             : t('quizTitle')
-          }
+          )}
         />
 
         {!quizComplete ? (
@@ -200,6 +213,16 @@ export default function Quiz() {
             <p className="text-lg mb-6">
               {t('yourScore')}: {score} {t('outOf')} {questions.length} {t('questions')}
             </p>
+            {showFlagMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="mb-6 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg"
+              >
+                {t('quizFlagFound')}
+              </motion.div>
+            )}
             <div className="space-x-4">
               <button
                 onClick={handleRestart}

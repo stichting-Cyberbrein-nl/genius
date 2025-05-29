@@ -1,128 +1,83 @@
 import { useState, useEffect } from 'react';
 import { Flag, FlagState } from '@/types/flag';
-
-const initialFlags: Flag[] = [
-  {
-    id: 'sound_flag',
-    type: 'sound',
-    name: 'Sound Master',
-    description: 'Geluid aan/uit gezet',
-    points: 10,
-    found: false
-  },
-  {
-    id: 'animation_flag',
-    type: 'animation',
-    name: 'Animation Expert',
-    description: 'Animaties aan/uit gezet',
-    points: 10,
-    found: false
-  },
-  {
-    id: 'text_flag',
-    type: 'text',
-    name: 'Text Wizard',
-    description: 'Tekstgrootte aangepast',
-    points: 10,
-    found: false
-  },
-  {
-    id: 'theme_flag',
-    type: 'theme',
-    name: 'Theme Master',
-    description: 'Thema aangepast',
-    points: 10,
-    found: false
-  },
-  {
-    id: '404_flag',
-    type: '404',
-    name: '404 Explorer',
-    description: '404 pagina gevonden',
-    points: 20,
-    found: false
-  },
-  {
-    id: 'admin_flag',
-    type: 'admin',
-    name: 'Admin Access',
-    description: 'Admin pagina gevonden',
-    points: 30,
-    found: false
-  },
-  {
-    id: 'einstein_flag',
-    type: 'einstein',
-    name: 'Einstein Friend',
-    description: 'Op Einstein geklikt',
-    points: 5,
-    found: false
-  }
-];
+import { getFoundFlags, getTotalPoints, findFlag as findFlagAction } from '@/lib/flags';
 
 export function useFlags() {
   const [flagState, setFlagState] = useState<FlagState>(() => {
+    // Initialize state from localStorage if available
     if (typeof window !== 'undefined') {
-      const savedState = localStorage.getItem('flagState');
-      if (savedState) {
-        return JSON.parse(savedState);
+      const savedFlags = localStorage.getItem('flags');
+      if (savedFlags) {
+        try {
+          const parsedFlags = JSON.parse(savedFlags);
+          return {
+            flags: parsedFlags.filter((f: Flag) => f.found),
+            totalPoints: parsedFlags
+              .filter((f: Flag) => f.found)
+              .reduce((sum: number, flag: Flag) => sum + flag.points, 0)
+          };
+        } catch (error) {
+          console.error('Error loading flags from localStorage:', error);
+        }
       }
     }
     return {
-      flags: initialFlags,
-      totalPoints: 0
+      flags: getFoundFlags(),
+      totalPoints: getTotalPoints()
     };
   });
 
+  // Listen for changes in localStorage and custom events
   useEffect(() => {
-    localStorage.setItem('flagState', JSON.stringify(flagState));
-  }, [flagState]);
-
-  const findFlag = (type: Flag['type']) => {
-    setFlagState(prevState => {
-      const updatedFlags = prevState.flags.map(flag => {
-        if (flag.type === type && !flag.found) {
-          return {
-            ...flag,
-            found: true,
-            foundAt: new Date().toISOString()
-          };
+    const handleStorageChange = () => {
+      const savedFlags = localStorage.getItem('flags');
+      if (savedFlags) {
+        try {
+          const parsedFlags = JSON.parse(savedFlags);
+          setFlagState({
+            flags: parsedFlags.filter((f: Flag) => f.found),
+            totalPoints: parsedFlags
+              .filter((f: Flag) => f.found)
+              .reduce((sum: number, flag: Flag) => sum + flag.points, 0)
+          });
+        } catch (error) {
+          console.error('Error loading flags from localStorage:', error);
         }
-        return flag;
-      });
+      }
+    };
 
-      const totalPoints = updatedFlags
-        .filter(flag => flag.found)
-        .reduce((sum, flag) => sum + flag.points, 0);
+    // Listen for both storage events and custom flag update events
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('flagsUpdated', handleStorageChange);
 
-      return {
-        flags: updatedFlags,
-        totalPoints
-      };
-    });
-  };
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('flagsUpdated', handleStorageChange);
+    };
+  }, []);
 
-  const getFoundFlags = () => {
-    return flagState.flags.filter(flag => flag.found);
-  };
-
-  const getFlagByType = (type: Flag['type']) => {
-    return flagState.flags.find(flag => flag.type === type);
-  };
-
-  const resetFlags = () => {
-    setFlagState({
-      flags: initialFlags,
-      totalPoints: 0
-    });
+  const findFlag = (id: string) => {
+    findFlagAction(id);
+    // Update state immediately after finding a flag
+    const savedFlags = localStorage.getItem('flags');
+    if (savedFlags) {
+      try {
+        const parsedFlags = JSON.parse(savedFlags);
+        setFlagState({
+          flags: parsedFlags.filter((f: Flag) => f.found),
+          totalPoints: parsedFlags
+            .filter((f: Flag) => f.found)
+            .reduce((sum: number, flag: Flag) => sum + flag.points, 0)
+        });
+      } catch (error) {
+        console.error('Error loading flags from localStorage:', error);
+      }
+    }
   };
 
   return {
-    flags: flagState.flags,
-    foundFlags: getFoundFlags(),
+    foundFlags: flagState.flags,
     totalPoints: flagState.totalPoints,
-    findFlag,
-    getFlagByType,
-    resetFlags
+    findFlag
   };
 } 

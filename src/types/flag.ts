@@ -1,13 +1,17 @@
-export type FlagType = 'sound' | 'animation' | 'text' | 'theme' | '404' | 'admin' | 'einstein';
+export type FlagCategory = 'encryption' | 'puzzle' | 'ui' | 'quiz' | 'achievement';
 
 export interface Flag {
   id: string;
-  type: FlagType;
   name: string;
   description: string;
+  category: FlagCategory;
   points: number;
   found: boolean;
   foundAt?: string;
+  // Optional fields for level-based flags
+  level?: number;
+  flag?: string;
+  hint?: string;
 }
 
 export interface FlagState {

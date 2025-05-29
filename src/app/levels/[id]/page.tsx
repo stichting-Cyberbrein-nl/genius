@@ -34,7 +34,7 @@ export default function Level() {
     setAttempts(prev => prev + 1);
     
     if (verifyFlag(input)) {
-      setMessage(t('correctFlag'));
+      setMessage(t('correctFlag') as string);
       setIsCorrect(true);
       // Automatically redirect to next level after 2 seconds
       setTimeout(() => {
@@ -42,7 +42,7 @@ export default function Level() {
         router.push(`/levels/${nextLevel}`);
       }, 2000);
     } else {
-      setMessage(t('wrongFlag'));
+      setMessage(t('wrongFlag') as string);
       // Show hint after 3 failed attempts
       if (attempts >= 2) {
         setShowHint(true);
@@ -67,10 +67,10 @@ export default function Level() {
 
         <Einstein
           message={isCorrect 
-            ? t('correctFlag')
+            ? t('correctFlag') as string
             : id === '1' 
-              ? `${t('decodeMessage')} "uryyb_jbeyq"`
-              : `${t('levelWelcome')} ${id}`
+              ? `${t('decodeMessage') as string} "uryyb_jbeyq"`
+              : `${t('levelWelcome') as string} ${id}`
           }
         />
 
@@ -90,7 +90,7 @@ export default function Level() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
-                placeholder={t('flagPlaceholder')}
+                placeholder={t('flagPlaceholder') as string}
                 disabled={isCorrect}
               />
             </div>

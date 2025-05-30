@@ -19,7 +19,7 @@ interface Translations {
 const translations: Translations = {
   nl: {
     // Algemene navigatie
-    welcome: 'Welkom bij Genius!',
+    welcome: 'Welkom bij Genius! Het doel is om zoveel mogelijk flags te vinden. Deze flags zijn verborgen in de website en je moet ze vinden door de website te inspecteren. Op de flags pagina kun je je vlaggen bekijken en een certificaat downloaden.',
     start: 'Start het spel',
     levels: 'Levels',
     flags: 'Behaalde flags',
@@ -353,7 +353,7 @@ const translations: Translations = {
   },
   en: {
     // General navigation
-    welcome: 'Welcome to Genius!',
+    welcome: "Welcome to Genius! The goal is to find as many flags as possible. These flags are hidden throughout the website, and you need to find them by inspecting the site. On the flags page, you can view your collected flags and download a certificate.",
     start: 'Start the game',
     levels: 'Levels',
     flags: 'Achieved flags',

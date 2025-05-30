@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/i18n';
 
 interface EncryptionQuestionProps {
@@ -20,6 +20,15 @@ export default function EncryptionQuestion({
   const [showCheatSheet, setShowCheatSheet] = useState(false);
   const [input, setInput] = useState('');
   const [feedback, setFeedback] = useState('');
+
+  useEffect(() => {
+    if (feedback === t('einsteinCorrect')) {
+      const timer = setTimeout(() => {
+        setFeedback('');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [feedback, t]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

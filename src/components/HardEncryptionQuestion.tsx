@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/i18n';
 
 type EncryptionType = 'morse' | 'binary' | 'hex' | 'base64' | 'caesar' | 'rot13';
@@ -22,6 +22,15 @@ export default function HardEncryptionQuestion({
   const [answer, setAnswer] = useState('');
   const [message, setMessage] = useState('');
   const [showCheatSheet, setShowCheatSheet] = useState(false);
+
+  useEffect(() => {
+    if (message === String(t('einsteinCorrect'))) {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, t]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

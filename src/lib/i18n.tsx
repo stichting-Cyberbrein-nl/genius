@@ -303,7 +303,7 @@ const translations: Translations = {
 
     // Einstein quiz
     einsteinCaesarTitle: 'Caesar Cijfer',
-    einsteinCaesarDesc: 'Voer de juiste oplossing in voor deze Caesar-cijfer puzzel.',
+    einsteinCaesarDesc: 'Voer de juiste oplossing in voor deze Caesar-cijfer puzzel met verschuiving {shift}.',
     einsteinMorseTitle: 'Morse Code',
     einsteinMorseDesc: 'Voer de juiste oplossing in voor deze Morse-code puzzel.',
     einsteinHexTitle: 'Hexadecimale Code',
@@ -637,7 +637,7 @@ const translations: Translations = {
 
     // Einstein quiz
     einsteinCaesarTitle: 'Caesar Cipher',
-    einsteinCaesarDesc: 'Enter the correct solution for this Caesar cipher puzzle.',
+    einsteinCaesarDesc: 'Enter the correct solution for this Caesar cipher puzzle with shift {shift}.',
     einsteinMorseTitle: 'Morse Code',
     einsteinMorseDesc: 'Enter the correct solution for this Morse code puzzle.',
     einsteinHexTitle: 'Hexadecimal Code',

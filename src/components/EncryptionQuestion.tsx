@@ -88,7 +88,7 @@ export default function EncryptionQuestion({
     if (type === 'caesar') {
       return (
         <div className="text-sm">
-          <p className="font-bold mb-2">Caesar Cipher Cheat Sheet:</p>
+          <p className="font-bold mb-2">Caesar Cipher Cheat Sheet (Shift: {shift}):</p>
           <p>Bij een Caesar cipher wordt elke letter verschoven met een vast aantal posities.</p>
           <p className="mt-2">Voorbeeld met shift {shift}:</p>
           <div className="font-mono bg-gray-100 dark:bg-gray-800 p-2 rounded mt-1">

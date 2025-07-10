@@ -104,14 +104,38 @@ export default function HintsPage() {
     switch (type) {
       case 'caesar':
         return (
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-bold mb-2">Encrypted:</h4>
-              <div className="font-mono">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-bold mb-2">Shift 3 (Veel gebruikt):</h4>
+                <div className="font-mono">
+                  <div>Encrypted: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+                  <div>Original:  X Y Z A B C D E F G H I J K L M N O P Q R S T U V W</div>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-bold mb-2">Shift 5:</h4>
+                <div className="font-mono">
+                  <div>Encrypted: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+                  <div>Original:  V W X Y Z A B C D E F G H I J K L M N O P Q R S T U</div>
+                </div>
+              </div>
             </div>
-            <div>
-              <h4 className="font-bold mb-2">Original:</h4>
-              <div className="font-mono">X Y Z A B C D E F G H I J K L M N O P Q R S T U V W</div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-bold mb-2">Shift 7:</h4>
+                <div className="font-mono">
+                  <div>Encrypted: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+                  <div>Original:  T U V W X Y Z A B C D E F G H I J K L M N O P Q R S</div>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-bold mb-2">Shift 13 (ROT13):</h4>
+                <div className="font-mono">
+                  <div>Encrypted: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+                  <div>Original:  N O P Q R S T U V W X Y Z A B C D E F G H I J K L M</div>
+                </div>
+              </div>
             </div>
           </div>
         );

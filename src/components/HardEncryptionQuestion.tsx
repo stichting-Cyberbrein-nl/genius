@@ -131,6 +131,21 @@ export default function HardEncryptionQuestion({
 
   const getCheatSheet = () => {
     switch (type) {
+      case 'caesar':
+        return (
+          <div className="text-sm">
+            <p className="font-bold mb-2">Caesar Cipher Cheat Sheet (Shift: {shift}):</p>
+            <p>Bij een Caesar cipher wordt elke letter verschoven met een vast aantal posities.</p>
+            <p className="mt-2">Voorbeeld met shift {shift}:</p>
+            <div className="font-mono bg-gray-100 dark:bg-gray-800 p-2 rounded mt-1">
+              <p>A → {String.fromCharCode(((65 - 65 + shift!) % 26) + 65)}</p>
+              <p>B → {String.fromCharCode(((66 - 65 + shift!) % 26) + 65)}</p>
+              <p>C → {String.fromCharCode(((67 - 65 + shift!) % 26) + 65)}</p>
+              <p>...</p>
+              <p>Z → {String.fromCharCode(((90 - 65 + shift!) % 26) + 65)}</p>
+            </div>
+          </div>
+        );
       case 'morse':
         return (
           <div className="text-sm">

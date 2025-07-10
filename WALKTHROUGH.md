@@ -16,6 +16,8 @@
 4. `unpxre` (shift: 13) → `HACKER`
 5. `xbdiuxppse` (shift: 1) → `WACHTWOORD`
 
+**Tip:** De shift wordt nu getoond in de game interface!
+
 ### ROT13 Vragen
 1. `ploreoerva` → `CYBERBREIN`
 2. `unpxfuvryq` → `HACKSHIELD`
@@ -28,7 +30,7 @@
 ### Morse Code
 1. `.... . .-.. .-.. --- / .-- --- .-. .-.. -..` → `HELLO WORLD`
 2. `... -. .- -.- . -... --- -.--` → `SNAKEBOY`
-3. `-.-. --- -.. . -.-. .-. .- -.- . .-.` → `CODECRACKER`
+3. `-.-. --- -.. . -.-. .-. .- -.-. -.- . .-.` → `codekraker`
 
 ### Binary
 1. `01001000 01100101 01101100 01101100 01101111` → `HELLO`
@@ -50,10 +52,12 @@
 2. `EBG13` (shift: 13) → `ROT13`
 3. `HTRUZYJW` (shift: 5) → `COMPUTER`
 
+**Tip:** De shift wordt nu getoond in de game interface!
+
 ### ROT13 (Moeilijk)
 1. `syvccremreb` → `FLIPPERZERO`
 2. `qnexjro` → `DARKWEB`
-3. `oehgr-sbepr` → `BRUTEFORCE`
+3. `oehgr-sbepr` → `BRUTE-FORCE`
 
 ## Quiz
 

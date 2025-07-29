@@ -163,7 +163,7 @@ export default function HintsPage() {
                 K: -.- | L: .-.. | M: -- | N: -. | O: ---<br />
                 P: .--. | Q: --.- | R: .-. | S: ... | T: -<br />
                 U: ..- | V: ...- | W: .-- | X: -..- | Y: -.--<br />
-                Z: --..
+                Z: --.. | spatie: /
               </div>
             </div>
             <div>

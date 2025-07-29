@@ -221,7 +221,7 @@ const translations: Translations = {
       '• Gebruik een online binaire naar ASCII converter voor langere berichten'
     ],
     binaryCheatSheet: 'Binaire Code Hulpmiddel:',
-    binaryCheatSheetDesc: 'Gebruik deze tabel om snel te decoderen. Zoek de binaire code en lees de bijbehorende letter of cijfer.',
+    binaryCheatSheetDesc: 'Gebruik deze tabel om snel te decoderen. Zoek de binaire code en lees de bijbehorende letter.',
     
     // Hexadecimal
     hexTitle: 'Hexadecimale Code',
@@ -244,7 +244,7 @@ const translations: Translations = {
       '• Kleine letters zijn 61-7A in hex'
     ],
     hexCheatSheet: 'Hexadecimale Code Hulpmiddel:',
-    hexCheatSheetDesc: 'Gebruik deze tabel om snel te decoderen. Zoek de hexadecimale code en lees de bijbehorende letter of cijfer.',
+    hexCheatSheetDesc: 'Gebruik deze tabel om snel te decoderen. Zoek de hexadecimale code en lees de bijbehorende letter.',
     
     // Base64
     base64Title: 'Base64 Codering',
@@ -266,7 +266,7 @@ const translations: Translations = {
       '• Gebruik een online Base64 decoder voor langere berichten'
     ],
     base64CheatSheet: 'Base64 Hulpmiddel:',
-    base64CheatSheetDesc: 'Gebruik deze tabel om snel te decoderen. Zoek de Base64 code en lees de bijbehorende letter of cijfer.',
+    base64CheatSheetDesc: 'Gebruik deze tabel om snel te decoderen. Zoek de Base64 code en lees de bijbehorende letter.',
 
     // Algemene secties
     stepByStep: 'Stap voor Stap Decoderen:',
@@ -303,7 +303,7 @@ const translations: Translations = {
 
     // Einstein quiz
     einsteinCaesarTitle: 'Caesar Cijfer',
-    einsteinCaesarDesc: 'Voer de juiste oplossing in voor deze Caesar-cijfer puzzel met verschuiving {shift}.',
+    einsteinCaesarDesc: 'Voer de juiste oplossing in voor deze Caesar-cijfer puzzel met verschuiving {shift}.',    
     einsteinMorseTitle: 'Morse Code',
     einsteinMorseDesc: 'Voer de juiste oplossing in voor deze Morse-code puzzel.',
     einsteinHexTitle: 'Hexadecimale Code',
@@ -319,6 +319,11 @@ const translations: Translations = {
     einsteinCorrect: 'Correct! Goed gedaan!',
     einsteinIncorrect: 'Helaas, dat is niet het juiste antwoord. Probeer het opnieuw!',
     einsteinFlagFound: 'Gefeliciteerd! Je hebt de Einstein flag gevonden!',
+    einsteinRot13Title: 'ROT13',
+    einsteinRot13Desc: 'Voer de juiste oplossing in voor deze ROT13 puzzel.',
+    einsteinBase64Title: 'Base64 Codering',
+    einsteinBase64Desc: 'Voer de juiste oplossing in voor deze Base64 puzzel.',
+ 
 
     // Quiz vragen
     quizQuestion1: 'Wat is een wachtwoord?',
@@ -345,8 +350,8 @@ const translations: Translations = {
     quizAnswer4_3: 'Data versleuteling',
     quizAnswer4_4: 'Computer programma',
 
-    quizQuestion5: 'Wat is een virus?',
-    quizAnswer5_1: 'Biologische ziekte',
+    quizQuestion5: 'Wat is een computer virus?',
+    quizAnswer5_1: 'Ziekte',
     quizAnswer5_2: 'Webpagina',
     quizAnswer5_3: 'Computer programma',
     quizAnswer5_4: 'Schadelijke software',
@@ -653,6 +658,10 @@ const translations: Translations = {
     einsteinCorrect: 'Correct! Well done!',
     einsteinIncorrect: 'Sorry, that\'s not the right answer. Try again!',
     einsteinFlagFound: 'Congratulations! You\'ve found the Einstein flag!',
+    einsteinRot13Title: 'ROT13',
+    einsteinRot13Desc: 'Enter the correct solution for this ROT13 puzzle.',
+    einsteinBase64Title: 'Base64 Encoding',
+    einsteinBase64Desc: 'Enter the correct solution for this Base64 puzzle.',
 
     // Quiz questions
     quizQuestion1: 'What is a password?',

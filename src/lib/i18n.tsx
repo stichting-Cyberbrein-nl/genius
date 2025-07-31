@@ -323,7 +323,14 @@ const translations: Translations = {
     einsteinRot13Desc: 'Voer de juiste oplossing in voor deze ROT13 puzzel.',
     einsteinBase64Title: 'Base64 Codering',
     einsteinBase64Desc: 'Voer de juiste oplossing in voor deze Base64 puzzel.',
- 
+    caesarCipherDescription: 'Bij een Caesar cipher wordt elke letter verschoven met een vast aantal posities.',
+    caesarExampleTitle: 'Voorbeeld met shift {shift}:',
+    morseCheatSheetContent: 'A: .- | B: -... | C: -.-. | D: -.. | E: .',
+    morseCheatSheetContent2: 'F: ..-. | G: --. | H: .... | I: .. | J: .---',
+    morseCheatSheetContent3: 'K: -.- | L: .-.. | M: -- | N: -. | O: ---',
+    morseCheatSheetContent4: 'P: .--. | Q: --.- | R: .-. | S: ... | T: -',
+    morseCheatSheetContent5: 'U: ..- | V: ...- | W: .-- | X: -..- | Y: -.--',
+    morseCheatSheetContent6: 'Z: --.. | Space: /',
 
     // Quiz vragen
     quizQuestion1: 'Wat is een wachtwoord?',
@@ -662,6 +669,17 @@ const translations: Translations = {
     einsteinRot13Desc: 'Enter the correct solution for this ROT13 puzzle.',
     einsteinBase64Title: 'Base64 Encoding',
     einsteinBase64Desc: 'Enter the correct solution for this Base64 puzzle.',
+    caesarCipherDescription: 'In a Caesar cipher, each letter is shifted by a fixed number of positions.',
+    caesarExampleTitle: 'Example with shift {shift}:',
+    morseCheatSheetContent: 'A: .- | B: -... | C: -.-. | D: -.. | E: .',
+    morseCheatSheetContent2: 'F: ..-. | G: --. | H: .... | I: .. | J: .---',
+    morseCheatSheetContent3: 'K: -.- | L: .-.. | M: -- | N: -. | O: ---',
+    morseCheatSheetContent4: 'P: .--. | Q: --.- | R: .-. | S: ... | T: -',
+    morseCheatSheetContent5: 'U: ..- | V: ...- | W: .-- | X: -..- | Y: -.--',
+    morseCheatSheetContent6: 'Z: --.. | Space: /',
+    binaryCheatSheetExample: 'Example: 01001000 01101001 = "Hi"',
+    hexCheatSheetExample: 'Example: 48 69 = "Hi"',
+    base64CheatSheetExample: 'Example: SGVsbG8 = "Hello"',
 
     // Quiz questions
     quizQuestion1: 'What is a password?',

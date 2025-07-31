@@ -134,9 +134,9 @@ export default function HardEncryptionQuestion({
       case 'caesar':
         return (
           <div className="text-sm">
-            <p className="font-bold mb-2">Caesar Cipher Cheat Sheet (Shift: {shift}):</p>
-            <p>Bij een Caesar cipher wordt elke letter verschoven met een vast aantal posities.</p>
-            <p className="mt-2">Voorbeeld met shift {shift}:</p>
+            <p className="font-bold mb-2">{String(t('caesarCheatSheet'))} (Shift: {shift}):</p>
+            <p>{String(t('caesarCipherDescription'))}</p>
+            <p className="mt-2">{String(t('caesarExampleTitle', { shift: shift || 0 }))}</p>
             <div className="font-mono bg-gray-100 dark:bg-gray-800 p-2 rounded mt-1">
               <p>A → {String.fromCharCode(((65 - 65 + shift!) % 26) + 65)}</p>
               <p>B → {String.fromCharCode(((66 - 65 + shift!) % 26) + 65)}</p>
@@ -149,37 +149,37 @@ export default function HardEncryptionQuestion({
       case 'morse':
         return (
           <div className="text-sm">
-            <p className="font-bold mb-2">Morse Code Cheat Sheet:</p>
-            <p>A: .- | B: -... | C: -.-. | D: -.. | E: .</p>
-            <p>F: ..-. | G: --. | H: .... | I: .. | J: .---</p>
-            <p>K: -.- | L: .-.. | M: -- | N: -. | O: ---</p>
-            <p>P: .--. | Q: --.- | R: .-. | S: ... | T: -</p>
-            <p>U: ..- | V: ...- | W: .-- | X: -..- | Y: -.--</p>
-            <p>Z: --.. | Space: /</p>
+            <p className="font-bold mb-2">{String(t('morseCheatSheet'))}</p>
+            <p>{String(t('morseCheatSheetContent'))}</p>
+            <p>{String(t('morseCheatSheetContent2'))}</p>
+            <p>{String(t('morseCheatSheetContent3'))}</p>
+            <p>{String(t('morseCheatSheetContent4'))}</p>
+            <p>{String(t('morseCheatSheetContent5'))}</p>
+            <p>{String(t('morseCheatSheetContent6'))}</p>
           </div>
         );
       case 'binary':
         return (
           <div className="text-sm">
-            <p className="font-bold mb-2">Binary to ASCII:</p>
-            <p>Each 8 bits (1 byte) represents one character</p>
-            <p>Example: 01001000 01101001 = &quot;Hi&quot;</p>
+            <p className="font-bold mb-2">{String(t('binaryCheatSheet'))}</p>
+            <p>{String(t('binaryCheatSheetDesc'))}</p>
+            <p>{String(t('binaryCheatSheetExample'))}</p>
           </div>
         );
       case 'hex':
         return (
           <div className="text-sm">
-            <p className="font-bold mb-2">Hexadecimal to ASCII:</p>
-            <p>Each pair of hex digits represents one character</p>
-            <p>Example: 48 69 = &quot;Hi&quot;</p>
+            <p className="font-bold mb-2">{String(t('hexCheatSheet'))}</p>
+            <p>{String(t('hexCheatSheetDesc'))}</p>
+            <p>{String(t('hexCheatSheetExample'))}</p>
           </div>
         );
       case 'base64':
         return (
           <div className="text-sm">
-            <p className="font-bold mb-2">Base64:</p>
-            <p>Uses A-Z, a-z, 0-9, +, and /</p>
-            <p>Example: SGVsbG8 = &quot;Hello&quot;</p>
+            <p className="font-bold mb-2">{String(t('base64CheatSheet'))}</p>
+            <p>{String(t('base64CheatSheetDesc'))}</p>
+            <p>{String(t('base64CheatSheetExample'))}</p>
           </div>
         );
       default:

@@ -12,33 +12,22 @@ import { motion } from 'framer-motion';
 const questions = [
   // Morse code - Basis woorden
   { type: 'morse' as const, encryptedText: '.... . .-.. .-.. --- / .-- --- .-. .-.. -..' }, // HELLO WORLD
-  { type: 'morse' as const, encryptedText: '... -. .- -.- . -... --- -.--' }, // snakeboy
-  { type: 'morse' as const, encryptedText: '-.-. --- -.. . -.- .-. .- -.- . .-.' }, // codekraker 
-  
-  // Binary - Basis woorden
   { type: 'binary' as const, encryptedText: '01001000 01100101 01101100 01101100 01101111' }, // HELLO
-  { type: 'binary' as const, encryptedText: '01000011 01101111 01100100 01101001 01101110 01100111' }, // CODING
-  { type: 'binary' as const, encryptedText: '01000010 01101001 01101110 01100001 01110010 01111001' }, // BINARY
-  
-  // Hexadecimal - Basis woorden
   { type: 'hex' as const, encryptedText: '48 65 78 61 64 65 63 69 6D 61 6C' }, // HEXADECIMAL
+  { type: 'base64' as const, encryptedText: 'U2VjdXJpdHk=' }, // SECURITY
+  { type: 'morse' as const, encryptedText: '... -. .- -.- . -... --- -.--' }, // snakeboy
+  { type: 'binary' as const, encryptedText: '01000011 01101111 01100100 01101001 01101110 01100111' }, // CODING
   { type: 'hex' as const, encryptedText: '43 6F 6D 70 75 74 65 72 20 53 63 69 65 6E 63 65' }, // COMPUTER SCIENCE
+  { type: 'base64' as const, encryptedText: 'RW5jcnlwdGlvbg==' }, // ENCRYPTION
+  { type: 'caesar' as const, shift: 5, encryptedText: 'HTRUZYJW' }, // COMPUTER
+  { type: 'morse' as const, encryptedText: '--. .- - . .-- .- -.--' }, // gateway 
+  { type: 'binary' as const, encryptedText: '01100100 01100100 01101111 01110011' }, // DDOS
+  { type: 'morse' as const, encryptedText: '-... .- -.-. -.- -.. --- --- .-.' }, // backdoor 
+  { type: 'morse' as const, encryptedText: '-.-. .. .--. .... . .-. -.- . -.--' }, // cipherkey 
+  { type: 'morse' as const, encryptedText: '... .- -. -.. -... --- -..-' }, // sandbox 
+  { type: 'binary' as const, encryptedText: '01000010 01101001 01101110 01100001 01110010 01111001' }, // BINARY
   { type: 'hex' as const, encryptedText: '50 72 6F 67 72 61 6D 6D 69 6E 67' }, // PROGRAMMING
   
-  // Base64 - Basis woorden
-  { type: 'base64' as const, encryptedText: 'U2VjdXJpdHk=' }, // SECURITY
-  { type: 'base64' as const, encryptedText: 'RW5jcnlwdGlvbg==' }, // ENCRYPTION
-  { type: 'base64' as const, encryptedText: 'Q3liZXJzZWN1cml0eQ==' }, // CYBERSECURITY
-  
-  // Caesar cipher - Moeilijkere shifts
-  { type: 'caesar' as const, shift: 7, encryptedText: 'OLSSV' }, // HELLO
-  { type: 'caesar' as const, shift: 13, encryptedText: 'EBG13' }, // ROT13
-  { type: 'caesar' as const, shift: 5, encryptedText: 'HTRUZYJW' }, // COMPUTER
-  
-  // ROT13 - Moeilijkere combinaties
-  { type: 'rot13' as const, encryptedText: 'syvccremreb' }, // flipperzero
-  { type: 'rot13' as const, encryptedText: 'qnexjro' }, // darkweb
-  { type: 'rot13' as const, encryptedText: 'oehgr-sbepr' } // bruteforce
 ];
 
 export default function HardGame() {

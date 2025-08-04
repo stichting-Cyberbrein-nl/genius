@@ -5,17 +5,143 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #374151;
+  --muted: #f9fafb;
+  --muted-foreground: #6b7280;
+  --accent: #f3f4f6;
+  --accent-foreground: #374151;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #ffffff;
+  --ring: #3b82f6;
+  --radius: 0.5rem;
+  --enable-animations: 1;
+  --enable-sound: 1;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0f0f23;
+  --foreground: #f8fafc;
+  --card: #1a1a2e;
+  --card-foreground: #f8fafc;
+  --popover: #1a1a2e;
+  --popover-foreground: #f8fafc;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #cbd5e1;
+  --muted: #1e293b;
+  --muted-foreground: #64748b;
+  --accent: #1e293b;
+  --accent-foreground: #cbd5e1;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #334155;
+  --input: #1e293b;
+  --ring: #3b82f6;
+  --enable-animations: 1;
+  --enable-sound: 1;
+}
+
+* {
+  border-color: var(--border);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Animation control */
+.no-animations *,
+.no-animations *::before,
+.no-animations *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+/* Conditional animations based on settings */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Only apply animations if enabled */
+*:not(.no-animations) .animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+*:not(.no-animations) .animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Sound feedback styles */
+.sound-enabled {
+  --enable-sound: 1;
+}
+
+.sound-disabled {
+  --enable-sound: 0;
+}
+
+/* Interactive sound feedback */
+button:active,
+a:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Disable sound feedback when sound is disabled */
+.no-sound button:active,
+.no-sound a:active {
+  transform: none;
+}
+
+/* Hover effects with sound feedback */
+button:hover,
+a:hover {
+  transition: all 0.2s ease;
+}
+
+.no-sound button:hover,
+.no-sound a:hover {
+  transition: none;
 }

@@ -25,6 +25,17 @@ export default function Einstein({ message, showDecrypt = false }: EinsteinProps
   const [selectedMethod, setSelectedMethod] = useState<DecryptMethod>('caesar');
   const [caesarShift, setCaesarShift] = useState(3);
   const [hasDecryptedBefore, setHasDecryptedBefore] = useState(false);
+  const [animations, setAnimations] = useState(true);
+  const [sound, setSound] = useState(true);
+
+  // Load settings
+  useEffect(() => {
+    const savedAnimations = localStorage.getItem('animations');
+    const savedSound = localStorage.getItem('sound');
+    
+    if (savedAnimations !== null) setAnimations(savedAnimations === 'true');
+    if (savedSound !== null) setSound(savedSound === 'true');
+  }, []);
 
   // Initialize hasDecryptedBefore from localStorage only once on component mount
   useEffect(() => {
@@ -34,7 +45,32 @@ export default function Einstein({ message, showDecrypt = false }: EinsteinProps
     }
   }, []); // Empty dependency array means this runs only once on mount
 
+  const playClickSound = () => {
+    if (!sound) return;
+    
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+      oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.15);
+    } catch (error) {
+      console.log('Audio not supported');
+    }
+  };
+
   const handleClick = () => {
+    playClickSound();
     findFlag('einstein_flag');
     setFlagMessage(t('einsteinFlagFound') as string);
     setShowFlagMessage(true);
@@ -45,6 +81,7 @@ export default function Einstein({ message, showDecrypt = false }: EinsteinProps
   };
 
   const handleDecrypt = () => {
+    playClickSound();
     try {
       let decrypted = null;
 
@@ -130,65 +167,103 @@ export default function Einstein({ message, showDecrypt = false }: EinsteinProps
   };
 
   const handleMethodChange = (method: DecryptMethod) => {
+    playClickSound();
     setSelectedMethod(method);
     setError('');
     setResult('');
   };
 
+  const handleClosePopup = () => {
+    playClickSound();
+    setShowPopup(false);
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center">
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={handleClick}
-        className="cursor-pointer relative"
-      >
-        <div className="w-48 h-48 relative">
-          <Image
-            src="/einstein.png"
-            alt="Einstein"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-      </motion.div>
-
-      {message && (
+      {animations ? (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 max-w-xs"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleClick}
+          className="cursor-pointer relative"
         >
-          <div className="relative">
-            <p className="text-gray-700 dark:text-gray-300 text-center">{message}</p>
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white dark:bg-gray-800 rotate-45"></div>
+          <div className="w-48 h-48 relative">
+            <Image
+              src="/einstein.png"
+              alt="Einstein"
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
         </motion.div>
+      ) : (
+        <div
+          onClick={handleClick}
+          className="cursor-pointer relative"
+        >
+          <div className="w-48 h-48 relative">
+            <Image
+              src="/einstein.png"
+              alt="Einstein"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+        </div>
+      )}
+
+      {message && (
+        animations ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-4 bg-card border border-border rounded-lg shadow-lg p-4 max-w-xs"
+          >
+            <div className="relative">
+              <p className="text-foreground text-center">{message}</p>
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-card border-l border-t border-border rotate-45"></div>
+            </div>
+          </motion.div>
+        ) : (
+          <div className="mt-4 bg-card border border-border rounded-lg shadow-lg p-4 max-w-xs">
+            <div className="relative">
+              <p className="text-foreground text-center">{message}</p>
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-card border-l border-t border-border rotate-45"></div>
+            </div>
+          </div>
+        )
       )}
 
       {showFlagMessage && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg"
-        >
-          {flagMessage}
-        </motion.div>
+        animations ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg"
+          >
+            {flagMessage}
+          </motion.div>
+        ) : (
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg">
+            {flagMessage}
+          </div>
+        )
       )}
 
       {showDecrypt && showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{t('decryptionTool')}</h2>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-card border border-border rounded-lg p-6 max-w-lg w-full shadow-xl">
+            <h2 className="text-xl font-bold mb-4 text-foreground">{t('decryptionTool')}</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   {t('selectMethod')}
                 </label>
                 <select
-                  className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="w-full p-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200"
                   value={selectedMethod}
                   onChange={(e) => handleMethodChange(e.target.value as DecryptMethod)}
                 >
@@ -202,7 +277,7 @@ export default function Einstein({ message, showDecrypt = false }: EinsteinProps
 
               {selectedMethod === 'caesar' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     {t('shiftAmount')}
                   </label>
                   <input
@@ -211,17 +286,17 @@ export default function Einstein({ message, showDecrypt = false }: EinsteinProps
                     max="25"
                     value={caesarShift}
                     onChange={(e) => setCaesarShift(parseInt(e.target.value))}
-                    className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    className="w-full p-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   {t('enterEncryptedText')}
                 </label>
                 <textarea
-                  className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="w-full p-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200"
                   rows={4}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -230,28 +305,28 @@ export default function Einstein({ message, showDecrypt = false }: EinsteinProps
               </div>
 
               <button
-                className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-primary/90 transition-colors duration-200"
                 onClick={handleDecrypt}
               >
                 {t('decrypt')}
               </button>
 
               {error && (
-                <p className="text-red-500 text-sm">{error}</p>
+                <p className="text-destructive text-sm">{error}</p>
               )}
 
               {result && (
                 <div className="mt-4">
-                  <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-2">{t('decryptedResult')}</h3>
-                  <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md">
-                    <p className="font-mono text-gray-900 dark:text-white">{result}</p>
+                  <h3 className="font-medium text-foreground mb-2">{t('decryptedResult')}</h3>
+                  <div className="bg-muted p-3 rounded-md border border-border">
+                    <p className="font-mono text-foreground">{result}</p>
                   </div>
                 </div>
               )}
 
               <button
-                className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors mt-4"
-                onClick={() => setShowPopup(false)}
+                className="w-full bg-muted text-foreground py-2 px-4 rounded-md hover:bg-accent transition-colors duration-200 mt-4"
+                onClick={handleClosePopup}
               >
                 {t('close')}
               </button>

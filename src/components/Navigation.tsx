@@ -2,19 +2,60 @@
 
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Navigation() {
   const { t, language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [sound, setSound] = useState(true);
+
+  // Load sound setting
+  useEffect(() => {
+    const savedSound = localStorage.getItem('sound');
+    if (savedSound !== null) setSound(savedSound === 'true');
+  }, []);
+
+  const playClickSound = () => {
+    if (!sound) return;
+    
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+      oscillator.frequency.setValueAtTime(500, audioContext.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0.03, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    } catch (error) {
+      console.log('Audio not supported');
+    }
+  };
+
+  const handleMenuToggle = () => {
+    playClickSound();
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLanguageChange = (newLanguage: 'nl' | 'en') => {
+    playClickSound();
+    setLanguage(newLanguage);
+  };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow-lg">
+    <nav className="bg-card border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
-            <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-gray-800 dark:text-white">
+            <Link href="/" className="flex items-center" onClick={playClickSound}>
+              <span className="text-xl font-bold text-foreground">
                 Genius
               </span>
             </Link>
@@ -23,38 +64,43 @@ export default function Navigation() {
           <div className="hidden sm:flex sm:items-center sm:space-x-4">
             <Link
               href="/levels/1"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('levels')}
             </Link>
             <Link
               href="/flags"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('flags')}
             </Link>
             <Link
               href="/hints"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('hints')}
             </Link>
             <Link
               href="/quiz"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('quiz')}
             </Link>
             <Link
               href="/settings"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('settings')}
             </Link>
             <select
               value={language}
-              onChange={(e) => setLanguage(e.target.value as 'nl' | 'en')}
-              className="ml-4 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2 rounded-md text-sm font-medium"
+              onChange={(e) => handleLanguageChange(e.target.value as 'nl' | 'en')}
+              className="ml-4 bg-muted text-foreground px-3 py-2 rounded-md text-sm font-medium border border-border focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200"
             >
               <option value="nl">NL</option>
               <option value="en">EN</option>
@@ -64,8 +110,8 @@ export default function Navigation() {
           {/* Mobile menu button */}
           <div className="sm:hidden flex items-center">
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
+              onClick={handleMenuToggle}
+              className="inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none transition-colors duration-200"
             >
               <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
@@ -106,42 +152,47 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="sm:hidden">
+        <div className="sm:hidden border-t border-border bg-card">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
               href="/levels/1"
-              className="block text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-base font-medium"
+              className="block text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('levels')}
             </Link>
             <Link
               href="/flags"
-              className="block text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-base font-medium"
+              className="block text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('flags')}
             </Link>
             <Link
               href="/hints"
-              className="block text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-base font-medium"
+              className="block text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('hints')}
             </Link>
             <Link
               href="/quiz"
-              className="block text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-base font-medium"
+              className="block text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('quiz')}
             </Link>
             <Link
               href="/settings"
-              className="block text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-base font-medium"
+              className="block text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+              onClick={playClickSound}
             >
               {t('settings')}
             </Link>
             <select
               value={language}
-              onChange={(e) => setLanguage(e.target.value as 'nl' | 'en')}
-              className="block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2 rounded-md text-base font-medium"
+              onChange={(e) => handleLanguageChange(e.target.value as 'nl' | 'en')}
+              className="block w-full bg-muted text-foreground px-3 py-2 rounded-md text-base font-medium border border-border focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200"
             >
               <option value="nl">NL</option>
               <option value="en">EN</option>

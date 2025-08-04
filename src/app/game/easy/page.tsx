@@ -12,17 +12,18 @@ import { motion } from 'framer-motion';
 const questions = [
   // Caesar cipher vragen
   { type: 'caesar' as const, shift: 3, encryptedText: 'fbehueuhlq' }, // CYBERBREIN
+  { type: 'rot13' as const, encryptedText: 'rvafgrva' }, // EINSTEIN
   { type: 'caesar' as const, shift: 5, encryptedText: 'mfhpxmnjqi' }, // HACKSHIELD
+  { type: 'rot13' as const, encryptedText: 'cnffjbeq' },   // PASSWORD
   { type: 'caesar' as const, shift: 7, encryptedText: 'cpybz' },     // VIRUS
   { type: 'caesar' as const, shift: 13, encryptedText: 'unpxre' },     // HACKER
-  { type: 'caesar' as const, shift: 1, encryptedText: 'xbdiuxppse' },   // WACHTWOORD
+  { type: 'caesar' as const, shift: 11, encryptedText: 'rpytfd' },   // GENIUS
+  { type: 'caesar' as const, shift: 1, encryptedText: 'fodszqujpo' },   // ENCRYPTION
+  { type: 'caesar' as const, shift: 4, encryptedText: 'dbftbs' },   // CAESAR
+  { type: 'rot13' as const, encryptedText: 'cuvfuvat' },   // PHISHING
+
   
-  // ROT13 vragen
-  { type: 'rot13' as const, encryptedText: 'ploreoerva' }, // CYBERBREIN
-  { type: 'rot13' as const, encryptedText: 'unpxfuvryq' }, // HACKSHIELD
-  { type: 'rot13' as const, encryptedText: 'cnffjbeq' },   // PASSWORD
-  { type: 'rot13' as const, encryptedText: 'rapelcgvba' }, // encryption
-  { type: 'rot13' as const, encryptedText: 'unpx_gur_unpxre' } // HACK_DE_HACKER
+
 ];
 
 export default function EasyGame() {

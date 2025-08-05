@@ -20,7 +20,7 @@ export default function Admin() {
       findFlag('admin_flag');
       flagFoundRef.current = true;
     }
-  }, []); // Empty dependency array since we only want to run this once
+  }, [findFlag]); // Include findFlag in dependencies
 
   const handleDeleteAll = () => {
     if (deleteConfirm === 'DELETE_ALL') {

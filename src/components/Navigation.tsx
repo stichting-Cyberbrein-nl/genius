@@ -19,7 +19,7 @@ export default function Navigation() {
     if (!sound) return;
     
     try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
       
@@ -34,7 +34,7 @@ export default function Navigation() {
       
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.1);
-    } catch (error) {
+    } catch {
       console.log('Audio not supported');
     }
   };

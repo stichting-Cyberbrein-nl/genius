@@ -32,7 +32,7 @@ export default function Flags() {
         }
       }
     }
-  }, [foundFlags]);
+  }, [foundFlags, isClient]);
 
   const handleDownload = async () => {
     setDownloading(true);

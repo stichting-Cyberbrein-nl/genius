@@ -14,28 +14,32 @@
 2. `mfhpxmnjqi` (shift: 5) → `HACKSHIELD`
 3. `cpybz` (shift: 7) → `VIRUS`
 4. `unpxre` (shift: 13) → `HACKER`
-5. `xbdiuxppse` (shift: 1) → `WACHTWOORD`
+5. `rpytfd` (shift: 11) → `GENIUS`
+6. `fodszqujpo` (shift: 1) → `ENCRYPTION`
+7. `dbftbs` (shift: 4) → `CAESAR`
 
 **Tip:** De shift wordt nu getoond in de game interface!
 
 ### ROT13 Vragen
-1. `ploreoerva` → `CYBERBREIN`
-2. `unpxfuvryq` → `HACKSHIELD`
-3. `cnffjbeq` → `PASSWORD`
-4. `rapelcgvba` → `ENCRYPTION`
-5. `unpx_gur_unpxre` → `HACK_THE_HACKER`
+1. `rvafgrva` → `EINSTEIN`
+2. `cnffjbeq` → `PASSWORD`
+3. `cuvfuvat` → `PHISHING`
 
 ## Moeilijke Game
 
 ### Morse Code
 1. `.... . .-.. .-.. --- / .-- --- .-. .-.. -..` → `HELLO WORLD`
 2. `... -. .- -.- . -... --- -.--` → `SNAKEBOY`
-3. `-.-. --- -.. . -.-. .-. .- -.-. -.- . .-.` → `codekraker`
+3. `--. .- - . .-- .- -.--` → `GATEWAY`
+4. `-... .- -.-. -.- -.. --- --- .-.` → `BACKDOOR`
+5. `-.-. .. .--. .... . .-. -.- . -.--` → `CIPHERKEY`
+6. `... .- -. -.. -... --- -..-` → `SANDBOX`
 
 ### Binary
 1. `01001000 01100101 01101100 01101100 01101111` → `HELLO`
 2. `01000011 01101111 01100100 01101001 01101110 01100111` → `CODING`
-3. `01000010 01101001 01101110 01100001 01110010 01111001` → `BINARY`
+3. `01100100 01100100 01101111 01110011` → `DDOS`
+4. `01000010 01101001 01101110 01100001 01110010 01111001` → `BINARY`
 
 ### Hexadecimal
 1. `48 65 78 61 64 65 63 69 6D 61 6C` → `HEXADECIMAL`
@@ -45,19 +49,11 @@
 ### Base64
 1. `U2VjdXJpdHk=` → `SECURITY`
 2. `RW5jcnlwdGlvbg==` → `ENCRYPTION`
-3. `Q3liZXJzZWN1cml0eQ==` → `CYBERSECURITY`
 
 ### Caesar Cipher (Moeilijk)
-1. `OLSSV` (shift: 7) → `HELLO`
-2. `EBG13` (shift: 13) → `ROT13`
-3. `HTRUZYJW` (shift: 5) → `COMPUTER`
+1. `HTRUZYJW` (shift: 5) → `COMPUTER`
 
 **Tip:** De shift wordt nu getoond in de game interface!
-
-### ROT13 (Moeilijk)
-1. `syvccremreb` → `FLIPPERZERO`
-2. `qnexjro` → `DARKWEB`
-3. `oehgr-sbepr` → `BRUTE-FORCE`
 
 ## Quiz
 

@@ -19,7 +19,7 @@ const questions = [
   { type: 'caesar' as const, shift: 13, encryptedText: 'unpxre' },     // HACKER
   { type: 'caesar' as const, shift: 11, encryptedText: 'rpytfd' },   // GENIUS
   { type: 'caesar' as const, shift: 1, encryptedText: 'fodszqujpo' },   // ENCRYPTION
-  { type: 'caesar' as const, shift: 4, encryptedText: 'dbftbs' },   // CAESAR
+  { type: 'caesar' as const, shift: 4, encryptedText: 'geiwev' },   // CAESAR
   { type: 'rot13' as const, encryptedText: 'cuvfuvat' },   // PHISHING
 
   

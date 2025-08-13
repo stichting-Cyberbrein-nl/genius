@@ -34,7 +34,7 @@ export default function EncryptionQuestion({
     e.preventDefault();
     const decrypted = decryptText(encryptedText, type, shift);
     
-    if (input.trim().toUpperCase() === decrypted.toUpperCase()) {
+    if (input.trim().toLowerCase() === decrypted.toLowerCase()) {
       setFeedback(t('einsteinCorrect') as string);
       setInput('');
       onCorrect();
